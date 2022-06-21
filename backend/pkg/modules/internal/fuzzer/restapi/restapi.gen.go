@@ -361,8 +361,8 @@ type Vulnerabilities struct {
 	Total *int `json:"total,omitempty"`
 }
 
-// GetApiFindingsParams defines parameters for GetApiFindings.
-type GetApiFindingsParams struct {
+// GetAPIFindingsParams defines parameters for GetAPIFindings.
+type GetAPIFindingsParams struct {
 	// Should findings include sensitive data ?
 	Sensitive *externalRef0.Sensitive `form:"sensitive,omitempty" json:"sensitive,omitempty"`
 }
@@ -490,7 +490,7 @@ type ServerInterface interface {
 	GetAnnotatedSpec(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID)
 	// Get findings for an API and module
 	// (GET /apiFindings/{apiID})
-	GetApiFindings(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID, params GetApiFindingsParams)
+	GetAPIFindings(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID, params GetAPIFindingsParams)
 	// Fuzz a Target
 	// (GET /fuzz/{apiID})
 	FuzzTarget(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID, params FuzzTargetParams)
@@ -567,8 +567,8 @@ func (siw *ServerInterfaceWrapper) GetAnnotatedSpec(w http.ResponseWriter, r *ht
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// GetApiFindings operation middleware
-func (siw *ServerInterfaceWrapper) GetApiFindings(w http.ResponseWriter, r *http.Request) {
+// GetAPIFindings operation middleware
+func (siw *ServerInterfaceWrapper) GetAPIFindings(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
@@ -583,7 +583,7 @@ func (siw *ServerInterfaceWrapper) GetApiFindings(w http.ResponseWriter, r *http
 	}
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params GetApiFindingsParams
+	var params GetAPIFindingsParams
 
 	// ------------- Optional query parameter "sensitive" -------------
 	if paramValue := r.URL.Query().Get("sensitive"); paramValue != "" {
@@ -597,7 +597,7 @@ func (siw *ServerInterfaceWrapper) GetApiFindings(w http.ResponseWriter, r *http
 	}
 
 	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.GetApiFindings(w, r, apiID, params)
+		siw.Handler.GetAPIFindings(w, r, apiID, params)
 	})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -1129,7 +1129,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/annotatedspec/{apiID}", wrapper.GetAnnotatedSpec)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/apiFindings/{apiID}", wrapper.GetApiFindings)
+		r.Get(options.BaseURL+"/apiFindings/{apiID}", wrapper.GetAPIFindings)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/fuzz/{apiID}", wrapper.FuzzTarget)
@@ -1214,21 +1214,21 @@ var swaggerSpec = []string{
 	"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",
-	"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",
+	"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",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file
