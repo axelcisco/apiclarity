@@ -831,8 +831,8 @@ type PutModulesBflaAuthorizationModelApiIDLearningStartParams struct {
 	NrTraces *int `form:"nr_traces,omitempty" json:"nr_traces,omitempty"`
 }
 
-// FuzzerGetApiFindingsParams defines parameters for FuzzerGetApiFindings.
-type FuzzerGetApiFindingsParams struct {
+// FuzzerGetAPIFindingsParams defines parameters for FuzzerGetAPIFindings.
+type FuzzerGetAPIFindingsParams struct {
 	// Should findings include sensitive data ?
 	Sensitive *externalRef0.Sensitive `form:"sensitive,omitempty" json:"sensitive,omitempty"`
 }
@@ -1148,8 +1148,8 @@ type ClientInterface interface {
 	// FuzzerGetAnnotatedSpec request
 	FuzzerGetAnnotatedSpec(ctx context.Context, apiID externalRef0.ApiID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// FuzzerGetApiFindings request
-	FuzzerGetApiFindings(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetApiFindingsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// FuzzerGetAPIFindings request
+	FuzzerGetAPIFindings(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetAPIFindingsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// FuzzerfuzzTarget request
 	FuzzerfuzzTarget(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerfuzzTargetParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -1617,8 +1617,8 @@ func (c *Client) FuzzerGetAnnotatedSpec(ctx context.Context, apiID externalRef0.
 	return c.Client.Do(req)
 }
 
-func (c *Client) FuzzerGetApiFindings(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetApiFindingsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewFuzzerGetApiFindingsRequest(c.Server, apiID, params)
+func (c *Client) FuzzerGetAPIFindings(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetAPIFindingsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewFuzzerGetAPIFindingsRequest(c.Server, apiID, params)
 	if err != nil {
 		return nil, err
 	}
@@ -4236,8 +4236,8 @@ func NewFuzzerGetAnnotatedSpecRequest(server string, apiID externalRef0.ApiID) (
 	return req, nil
 }
 
-// NewFuzzerGetApiFindingsRequest generates requests for FuzzerGetApiFindings
-func NewFuzzerGetApiFindingsRequest(server string, apiID externalRef0.ApiID, params *FuzzerGetApiFindingsParams) (*http.Request, error) {
+// NewFuzzerGetAPIFindingsRequest generates requests for FuzzerGetAPIFindings
+func NewFuzzerGetAPIFindingsRequest(server string, apiID externalRef0.ApiID, params *FuzzerGetAPIFindingsParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -5193,8 +5193,8 @@ type ClientWithResponsesInterface interface {
 	// FuzzerGetAnnotatedSpec request
 	FuzzerGetAnnotatedSpecWithResponse(ctx context.Context, apiID externalRef0.ApiID, reqEditors ...RequestEditorFn) (*FuzzerGetAnnotatedSpecResponse, error)
 
-	// FuzzerGetApiFindings request
-	FuzzerGetApiFindingsWithResponse(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetApiFindingsParams, reqEditors ...RequestEditorFn) (*FuzzerGetApiFindingsResponse, error)
+	// FuzzerGetAPIFindings request
+	FuzzerGetAPIFindingsWithResponse(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetAPIFindingsParams, reqEditors ...RequestEditorFn) (*FuzzerGetAPIFindingsResponse, error)
 
 	// FuzzerfuzzTarget request
 	FuzzerfuzzTargetWithResponse(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerfuzzTargetParams, reqEditors ...RequestEditorFn) (*FuzzerfuzzTargetResponse, error)
@@ -5955,7 +5955,7 @@ func (r FuzzerGetAnnotatedSpecResponse) StatusCode() int {
 	return 0
 }
 
-type FuzzerGetApiFindingsResponse struct {
+type FuzzerGetAPIFindingsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *externalRef0.APIFindings
@@ -5963,7 +5963,7 @@ type FuzzerGetApiFindingsResponse struct {
 }
 
 // Status returns HTTPResponse.Status
-func (r FuzzerGetApiFindingsResponse) Status() string {
+func (r FuzzerGetAPIFindingsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -5971,7 +5971,7 @@ func (r FuzzerGetApiFindingsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r FuzzerGetApiFindingsResponse) StatusCode() int {
+func (r FuzzerGetAPIFindingsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -6661,13 +6661,13 @@ func (c *ClientWithResponses) FuzzerGetAnnotatedSpecWithResponse(ctx context.Con
 	return ParseFuzzerGetAnnotatedSpecResponse(rsp)
 }
 
-// FuzzerGetApiFindingsWithResponse request returning *FuzzerGetApiFindingsResponse
-func (c *ClientWithResponses) FuzzerGetApiFindingsWithResponse(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetApiFindingsParams, reqEditors ...RequestEditorFn) (*FuzzerGetApiFindingsResponse, error) {
-	rsp, err := c.FuzzerGetApiFindings(ctx, apiID, params, reqEditors...)
+// FuzzerGetAPIFindingsWithResponse request returning *FuzzerGetAPIFindingsResponse
+func (c *ClientWithResponses) FuzzerGetAPIFindingsWithResponse(ctx context.Context, apiID externalRef0.ApiID, params *FuzzerGetAPIFindingsParams, reqEditors ...RequestEditorFn) (*FuzzerGetAPIFindingsResponse, error) {
+	rsp, err := c.FuzzerGetAPIFindings(ctx, apiID, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseFuzzerGetApiFindingsResponse(rsp)
+	return ParseFuzzerGetAPIFindingsResponse(rsp)
 }
 
 // FuzzerfuzzTargetWithResponse request returning *FuzzerfuzzTargetResponse
@@ -7842,15 +7842,15 @@ func ParseFuzzerGetAnnotatedSpecResponse(rsp *http.Response) (*FuzzerGetAnnotate
 	return response, nil
 }
 
-// ParseFuzzerGetApiFindingsResponse parses an HTTP response from a FuzzerGetApiFindingsWithResponse call
-func ParseFuzzerGetApiFindingsResponse(rsp *http.Response) (*FuzzerGetApiFindingsResponse, error) {
+// ParseFuzzerGetAPIFindingsResponse parses an HTTP response from a FuzzerGetAPIFindingsWithResponse call
+func ParseFuzzerGetAPIFindingsResponse(rsp *http.Response) (*FuzzerGetAPIFindingsResponse, error) {
 	bodyBytes, err := ioutil.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &FuzzerGetApiFindingsResponse{
+	response := &FuzzerGetAPIFindingsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -8451,7 +8451,7 @@ type ServerInterface interface {
 	FuzzerGetAnnotatedSpec(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID)
 	// Get findings for an API and module
 	// (GET /modules/fuzzer/apiFindings/{apiID})
-	FuzzerGetApiFindings(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID, params FuzzerGetApiFindingsParams)
+	FuzzerGetAPIFindings(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID, params FuzzerGetAPIFindingsParams)
 	// Fuzz a Target
 	// (GET /modules/fuzzer/fuzz/{apiID})
 	FuzzerfuzzTarget(w http.ResponseWriter, r *http.Request, apiID externalRef0.ApiID, params FuzzerfuzzTargetParams)
@@ -10270,8 +10270,8 @@ func (siw *ServerInterfaceWrapper) FuzzerGetAnnotatedSpec(w http.ResponseWriter,
 	handler.ServeHTTP(w, r.WithContext(ctx))
 }
 
-// FuzzerGetApiFindings operation middleware
-func (siw *ServerInterfaceWrapper) FuzzerGetApiFindings(w http.ResponseWriter, r *http.Request) {
+// FuzzerGetAPIFindings operation middleware
+func (siw *ServerInterfaceWrapper) FuzzerGetAPIFindings(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	var err error
@@ -10286,7 +10286,7 @@ func (siw *ServerInterfaceWrapper) FuzzerGetApiFindings(w http.ResponseWriter, r
 	}
 
 	// Parameter object where we will unmarshal all parameters from the context
-	var params FuzzerGetApiFindingsParams
+	var params FuzzerGetAPIFindingsParams
 
 	// ------------- Optional query parameter "sensitive" -------------
 	if paramValue := r.URL.Query().Get("sensitive"); paramValue != "" {
@@ -10300,7 +10300,7 @@ func (siw *ServerInterfaceWrapper) FuzzerGetApiFindings(w http.ResponseWriter, r
 	}
 
 	var handler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		siw.Handler.FuzzerGetApiFindings(w, r, apiID, params)
+		siw.Handler.FuzzerGetAPIFindings(w, r, apiID, params)
 	})
 
 	for _, middleware := range siw.HandlerMiddlewares {
@@ -11054,7 +11054,7 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 		r.Get(options.BaseURL+"/modules/fuzzer/annotatedspec/{apiID}", wrapper.FuzzerGetAnnotatedSpec)
 	})
 	r.Group(func(r chi.Router) {
-		r.Get(options.BaseURL+"/modules/fuzzer/apiFindings/{apiID}", wrapper.FuzzerGetApiFindings)
+		r.Get(options.BaseURL+"/modules/fuzzer/apiFindings/{apiID}", wrapper.FuzzerGetAPIFindings)
 	})
 	r.Group(func(r chi.Router) {
 		r.Get(options.BaseURL+"/modules/fuzzer/fuzz/{apiID}", wrapper.FuzzerfuzzTarget)
@@ -11198,22 +11198,22 @@ var swaggerSpec = []string{
 	"5qKxOGFivMcJSQg4bUG5BmZrfFOw4ux7zoEnR/1Vt0DH5vMkB2eUb4ViPqnRqvZNJ7+NsvAnRX++GNqo",
 	"02Xd6dDirdrJYluYgqvmnYsVYp/zWmkvzDaJlh7eQqjP5jyQnoZdpRvn3Epa+RjMmTICKKQJWrRuKk0R",
 	"SxG+R6b9KJ1ElRl+WQHYB+/evgOjmIEPcUZCELM1Sh8wrbPkg8DlAmmL13Qi+Afz3Qe50KNvczJR304c",
-	"PH+3BxaitqUuemkpoG8/lk5iBpaciRUxdJOHmjhK2WsQyNezx1mI5WmX87TLeaBdTiXm/J9W+eYCCCCY",
-	"w3Ql0jo28eSA8gZHF82KyUPpPV4Up6j03yzWpVttC3TVymvJgJaHEs/Pcu2XDwfb4DL5mGwHoMaTqjaA",
-	"xucOQPPHWf2GZHD+uQNQ+ea8NSksvnQAJR6uFyxrBioft+/GIP3KkI0z6luXDPU7y2MOMuJdZhEo1Ln7",
-	"Ta09HeZ7GCr3jkJQPIh0BM+ttM1w3r7395clRkDkM/HAduapat7cgwTTep6ZFa+tZlSWgZZF68thSYO/",
-	"L1VA/5kPjljqvTcuJOtqdZJmU5qbpUzLtbNEFwXVDyfPxfM2P78069LyJ1k+viwX20rqKNc+sixaq1r7",
-	"P+XZruJZlsOV5GkcSL1Qc1KTV6EmaturQUviBPxpAckCRX8GEKQZIfr5ORetiZPXozQ7R/En2SvLnqtI",
-	"uMhiCh+Wrlm3qXyxRjyvJuvM1bIfzaHItBjIe0bzVn/L00LfKXzQOac85WRPb26fasO65RVom92aVBlo",
-	"vGDrwMRJTGtcPLwjbGBgW0UAV3tSYbMrPdxXqDKEz8379/zFNofNFajfhjK3VEJEGF5imbXGjALzTdsm",
-	"ZXsdMb+/06tOFiTNKTuU9m18D+/mmQMr4z2y9h0du8WxyEAn+aP6ranGLdOMIq4TmEh6yWMA+VPPiyxN",
-	"RUVg5VYEPJND/Met+yYrxOSDV89M7MrzWhaC99VcymiXp9awv7qFDJhuy+8L5nbbT41MuTB1/08PmK05",
-	"Y6RI/Hn7Qv/nzljNldLsplXbyNxJvbIkhAzJt+zcuSze/ZNd9au5BpszEqIULOUzec08vjaGfk7danqv",
-	"b684qhMBfrS4SpXdE1J2vQ+XeYhVY/PhY6xtHH6WQOt6T85bFPHAh4Ny13XY40H29ySf9QhQiVjiwDMk",
-	"MHpURyyMo4Wm+Soq+dWpOOcwQE8BAQYEWxG6KmHnJgaqMOAkME84vroolY+pOVCclWzYwlT7wPvcudmu",
-	"UoI1UlxMKZCkrHOD6MqhjVpxQH5eIPbKmPmsx3NbjuUWomIpU9LAp63K+lrOQ9V4fjoWdToWdaBjUWWh",
-	"R5Xj7/rRoS2y382kIXUxYLuA107hu0i5wvQVpygObMBQ8RIZRem9Jk2WRt65qEjpPd08/ScAAP//Wlf6",
-	"Ll2+AAA=",
+	"PH+3BxaitqUuemkpoG8/lk5iBpaciRUxdJOHmjhK2WsQyNezx1mIpbFJd9rlPO1y7rPLqcSc/9Mq31wA",
+	"AQRzmK5EWscmnhxQ3uDoolkxeSi9x4viFJX+m8W6dKttga5aeS0Z0PJQ4vlZrv3y4WAbXCYfk+0A1HhS",
+	"1QbQ+NwBaP44q9+QDM4/dwAq35y3JoXFlw6gxMP1gmXNQOXj9t0YpF8ZsnFGfeuSoX5necxBRrzLLAKF",
+	"One/qbWnw3wPQ+XeUQiKB5GO4LmVthnO2/f+/rLECIh8Jh7YzjxVzZt7kGBazzOz4rXVjMoy0LJofTks",
+	"afD3pQroP/PBEUu998aFZF2tTtJsSnOzlGm5dpbooqD64eS5eN7m55dmXVr+JMvHl+ViW0kd5dpHlkVr",
+	"VWv/pzzbVTzLcriSPI0DqRdqTmryKtREbXs1aEmcgD8tIFmg6M8AgjQjRD8/56I1cfJ6lGbnKP4ke2XZ",
+	"cxUJF1lM4cPSNes2lS/WiOfVZJ25WvajORSZFgN5z2je6m95Wug7hQ8655SnnOzpze1TbVi3vAJts1uT",
+	"KgONF2wdmDiJaY2Lh3eEDQxsqwjgak8qbHalh/sKVYbwuXn/nr/Y5rC5AvXbUOaWSogIw0sss9aYUWC+",
+	"adukbK8j5vd3etXJgqQ5ZYfSvo3v4d08c2BlvEfWvqNjtzgWGegkf1S/NdW4ZZpRxHUCE0kveQwgf+p5",
+	"kaWpqAis3IqAZ3KI/7h132SFmHzw6pmJXXley0LwvppLGe3y1Br2V7eQAdNt+X3B3G77qZEpF6bu/+kB",
+	"szVnjBSJP29f6P/cGau5UprdtGobmTupV5aEkCH5lp07l8W7f7KrfjXXYHNGQpSCpXwmr5nH18bQz6lb",
+	"Te/17RVHdSLAjxZXqbJ7Qsqu9+EyD7FqbD58jLWNw88SaF3vyXmLIh74cFDuug57PMj+nuSzHgEqEUsc",
+	"eIYERo/qiIVxtNA0X0UlvzoV5xwG6CkgwIBgK0JXJezcxEAVBpwE5gnHVxel8jE1B4qzkg1bmGofeJ87",
+	"N9tVSrBGiospBZKUdW4QXTm0USsOyE95ROY1MfNZj+e2HMstRMVSpqSBT1uV9bWch6rx/FT84XQs6kDH",
+	"ospCjyrH3/WjQ1tkv5tJQ+piwHYBr53Cd5FyhekrTlEc2ICh4iUyitJ7TZosjbxzUZHSe7p5+k8AAAD/",
+	"/7A7YKpdvgAA",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file
